@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 
 // 모든 포스트 가져오기
 export function getMdxFiles() {
-  const postsDirectory = path.join(process.cwd(), 'content/posts');
+  const postsDirectory = path.join(process.cwd(), 'src/content/posts');
   const fileNames = fs.readdirSync(postsDirectory);
 
   const posts = fileNames.map((fileName) => {
@@ -20,7 +20,7 @@ export function getMdxFiles() {
 
 // 특정 포스트 가져오기
 export function getPostBySlug(slug: string) {
-  const postsDirectory = path.join(process.cwd(), 'content/posts');
+  const postsDirectory = path.join(process.cwd(), 'src/content/posts');
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
@@ -34,7 +34,7 @@ export function getPostBySlug(slug: string) {
 
 // 모든 포스트의 slug 가져오기
 export function getAllPostSlugs() {
-  const postsDirectory = path.join(process.cwd(), 'content/posts');
+  const postsDirectory = path.join(process.cwd(), 'src/content/posts');
   const fileNames = fs.readdirSync(postsDirectory);
 
   return fileNames.map((fileName) => {
