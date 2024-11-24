@@ -1,3 +1,7 @@
+import Navigation from '@/components/NavigationBar';
+import styles from './layout.module.css';
+import '@/app/globals.css';
+
 export default function RootLayout({
   children,
 }: {
@@ -5,7 +9,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <Navigation />
+        <main className={styles.main}>
+          {children}
+        </main>
+      </body>
     </html>
   )
 }
