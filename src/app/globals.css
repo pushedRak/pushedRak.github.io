@@ -71,9 +71,16 @@
 /* 전역 폰트 적용 */
 body {
   font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
 }
 
 p {
   margin-block-start: 0.25rem;
   margin-block-end: 0.25rem;
 }
+
+h1, h2, h3 {
+  margin-block-start: 0.25rem;
+  margin-block-end: 0.25rem;
+}
+
