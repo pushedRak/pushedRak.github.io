@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:visited {
+  color: inherit;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.post {
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+}
+
+.more {
+  text-decoration: none;
+}
+
+.more:visited {
+  color: inherit;
+}
+
