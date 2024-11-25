@@ -1,8 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 128px;
-  margin-top: 32px;
+  gap: 160px;
+  margin-top: 64px;
 }
 
 .title {
@@ -32,8 +32,7 @@
   font-weight: 700;
 }
 
-.skills {
-}
+.skills {}
 
 .skillList {
   display: flex;
@@ -41,23 +40,7 @@
   gap: 16px;
 }
 
-.skill {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 8px;
-  padding: 8px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 9999px;
-}
-
-.skillIcon {
-  width: 24px;
-  height: 24px;
-}
-
-.projects {
-}
+.projects {}
 
 .projectList {
   display: flex;

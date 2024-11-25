@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Project from '@/components/Project';
+import Skill from '@/components/Skill';
 import styles from './portfolio.module.css';
 
 export default function PortfolioPage() {
@@ -24,58 +25,19 @@ export default function PortfolioPage() {
       <section className={styles.skills}>
         <h1 className={styles.title}>Skills</h1>
         <div className={styles.skillList}>
-          <div className={styles.skill}>
-            <img src="/icons/reactJSIcon.webp" alt="react" className={styles.skillIcon} />
-            ReactJS
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/vueJSIcon.webp" alt="vue" className={styles.skillIcon} />
-            VueJS
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/nextJSIcon.webp" alt="next" className={styles.skillIcon} />
-            NextJS
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/javascriptIcon.webp" alt="javascript" className={styles.skillIcon} />
-            Javascript
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/typescriptIcon.webp" alt="typescript" className={styles.skillIcon} />
-            Typescript
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/reduxIcon.webp" alt="redux" className={styles.skillIcon} />
-            Redux
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/zustandIcon.webp" alt="zustand" className={styles.skillIcon} />
-            Zustand
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/reactQueryIcon.webp" alt="react-query" className={styles.skillIcon} />
-            React Query
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/tailwindIcon.webp" alt="tailwind" className={styles.skillIcon} />
-            TailwindCSS
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/styledComponentsIcon.webp" alt="styled-components" className={styles.skillIcon} />
-            Styled-Components
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/cplusplusIcon.webp" alt="cplusplus" className={styles.skillIcon} />
-            C++
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/javaIcon.webp" alt="java" className={styles.skillIcon} />
-            Java
-          </div>
-          <div className={styles.skill}>
-            <img src="/icons/pythonIcon.webp" alt="python" className={styles.skillIcon} />
-            Python
-          </div>
+          <Skill name="ReactJS" icon="/icons/reactJSIcon.webp" />
+          <Skill name="VueJS" icon="/icons/vueJSIcon.webp" />
+          <Skill name="NextJS" icon="/icons/nextJSIcon.webp" />
+          <Skill name="Javascript" icon="/icons/javascriptIcon.webp" />
+          <Skill name="Typescript" icon="/icons/typescriptIcon.webp" />
+          <Skill name="Redux" icon="/icons/reduxIcon.webp" />
+          <Skill name="Zustand" icon="/icons/zustandIcon.webp" />
+          <Skill name="React Query" icon="/icons/reactQueryIcon.webp" />
+          <Skill name="TailwindCSS" icon="/icons/tailwindIcon.webp" />
+          <Skill name="Styled-Components" icon="/icons/styledComponentsIcon.webp" />
+          <Skill name="C++" icon="/icons/cplusplusIcon.webp" />
+          <Skill name="Java" icon="/icons/javaIcon.webp" />
+          <Skill name="Python" icon="/icons/pythonIcon.webp" />
         </div>
       </section>
 
@@ -84,11 +46,18 @@ export default function PortfolioPage() {
         <h1 className={styles.title}>Projects</h1>
         <div className={styles.projectList}>
           <Project
+            image=""
+            title="스마트폰 디스플레이 결함 자동 검출 시스템"
+            award="🏆 금오공대 졸업논문 발표회 동상"
+            period="2023.03 ~ 2023.12"
+            description={[]}
+            techStack={[]} />
+          <Project
             githubLink="https://github.com/camforest/CampForest"
             image="/images/project-1.png"
-            title="CampForest" 
-            award="🏆 SSAFY 공통 프로젝트 우수상(3등)" 
-            period="2024.07 ~ 2024.08" 
+            title="Campforest"
+            award="🏆 SSAFY 공통 프로젝트 우수상(3등)"
+            period="2024.07 ~ 2024.08"
             description={[
               "캠핑 장비 대여 SNS 서비스입니다.",
               "저렴한 장비 대여, 캠핑장에 대한 신뢰성 있는 정보를 제공합니다.",
@@ -96,12 +65,12 @@ export default function PortfolioPage() {
             }
             techStack={["React", "TypeScript", "Tailwind", "Redux"]}
           />
-          <Project 
+          <Project
             githubLink="https://github.com/zozoclub/newlearn"
             image="/images/project-2.png"
-            title="NewLearn" 
-            award="🏆 SSAFY 특화 프로젝트 우수상(1등)" 
-            period="2024.08 ~ 2024.10" 
+            title="NewLearn"
+            award="🏆 SSAFY 특화 프로젝트 우수상(1등)"
+            period="2024.08 ~ 2024.10"
             description={[
               "국내 뉴스 기반 영어 학습 서비스입니다.",
               "추천 기능을 바탕으로 사용자의 관심사에 맞는 뉴스를 추천합니다.",
@@ -109,12 +78,12 @@ export default function PortfolioPage() {
             }
             techStack={["React", "TypeScript", "Styled-Components", "Recoil"]}
           />
-          <Project 
+          <Project
             githubLink="https://github.com/eum-silvertown/eum"
             image="/images/project-3.png"
-            title="이음" 
-            award="SSAFY 자율 프로젝트" 
-            period="2024.10 ~ 2024.11" 
+            title="이음"
+            award="SSAFY 자율 프로젝트"
+            period="2024.10 ~ 2024.11"
             description={[
               "학교 수업을 보조해주는 서비스입니다.",
               "실시간 화면 공유, 시험, 숙제 등을 통해 원할한 수업 진행을 도와줍니다.",
