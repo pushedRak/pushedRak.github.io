@@ -93,6 +93,24 @@ export default function PortfolioPage() {
           />
         </div>
       </section>
+
+      {/* Contant */}
+      <section>
+        <h1 className={styles.title}>Contact</h1>
+        <div className={styles.contactList}>
+          <div>
+            <div className={styles.contactItem}>
+              <p className={styles.contactTitle}>Email</p>
+              <p>hohosamdy@gmail.com</p>
+            </div>
+          </div>
+          <div>
+            <a href="https://github.com/pushedRak" target="_blank" rel="noreferrer" className={styles.contactIcon}>
+              <img src="/icons/githubIcon.png" alt="github" className={styles.contactIconImage} />
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
