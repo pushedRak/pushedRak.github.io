@@ -1,0 +1,21 @@
+.post-list {
+  display: grid;
+  gap: 2rem;
+}
+
+.post-card {
+  padding: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+}
+
+.post-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
