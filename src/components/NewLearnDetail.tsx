@@ -3,7 +3,10 @@ import styles from './NewLearnDetail.module.css';
 export default function NewLearnDetail() {
   return (<div>
     <div>
-      <h1>기여한 부분</h1>
+      <div className={styles.contributionHeader}>
+        <h1>기여한 부분</h1>
+        <p>Frontend</p>
+      </div>
       <ul>
         <li className={styles.contribution}>소셜 로그인</li>
         <p>OAuth를 활용한 소셜 로그인과 HTTPOnly Cookie JWT 인증을 구현하여 사용자의 로그인 정보를 안전하게 보관하였습니다.</p>

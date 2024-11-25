@@ -13,6 +13,7 @@ interface ProjectProps {
   title: string;
   award: string;
   period: string;
+  teamSize: number;
   description: string[];
   techStack: string[];
 }
@@ -24,6 +25,7 @@ export default function Project({
   title,
   award,
   period,
+  teamSize,
   description,
   techStack,
 }: ProjectProps) {
@@ -87,6 +89,7 @@ export default function Project({
           </div>
           <div className={styles.projectPeriod}>
             <p>{period}</p>
+            <p>{teamSize}명</p>
           </div>
           {description.map((desc, index) => (
             <p key={index} className={styles.projectDescription}>{desc}</p>

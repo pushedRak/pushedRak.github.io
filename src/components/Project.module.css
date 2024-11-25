@@ -82,6 +82,9 @@
 }
 
 .projectPeriod {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
   margin-bottom: 12px;
   color: #666666;
   font-size: 14px;
