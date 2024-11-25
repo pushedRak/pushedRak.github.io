@@ -1,4 +1,4 @@
-import styles from './EumDetail.module.css';
+// import styles from './EumDetail.module.css';
 
 export default function EumDetail() {
   return (<div>
