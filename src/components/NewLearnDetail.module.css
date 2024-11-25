@@ -10,3 +10,8 @@
   align-items: baseline;
   gap: 8px;
 }
+
+.contributionImage {
+  width: 100%;
+  margin: 0 auto;
+}
