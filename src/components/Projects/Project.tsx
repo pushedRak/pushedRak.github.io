@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import styles from './Project.module.css';
-import CampforestDetail from './CampforestDetail';
-import NewLearnDetail from './NewLearnDetail';
-import EumDetail from './EumDetail';
+import CampforestDetail from '../CampforestDetail';
+import NewLearnDetail from '../NewLearnDetail';
+import EumDetail from '../EumDetail';
 
 
 interface ProjectProps {
@@ -14,18 +14,14 @@ interface ProjectProps {
   award: string;
   period: string;
   teamSize: number;
-  description: string[];
+  description: string;
   techStack: string[];
 }
 
 
 export default function Project({
-  githubLink,
   image,
   title,
-  award,
-  period,
-  teamSize,
   description,
   techStack,
 }: ProjectProps) {
@@ -74,26 +70,9 @@ export default function Project({
           />
         </div>
         <div className={styles.projectDescriptionContainer}>
-          <div className={styles.projectHeader}>
-            <div className={styles.projectTitleContainer}>
-              <p className={styles.projectTitle}>{title}</p>
-              {githubLink &&
-                <a href={githubLink} target="_blank" rel="noopener noreferrer" className={styles.githubLink}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/icons/githubIcon.png" alt="github" className={styles.githubIcon} />
-                  <p>GitHub</p>
-                </a>
-              }
-            </div>
-            <p className={styles.projectAward}>{award}</p>
-          </div>
-          <div className={styles.projectPeriod}>
-            <p>{period}</p>
-            <p>{teamSize}명</p>
-          </div>
-          {description.map((desc, index) => (
-            <p key={index} className={styles.projectDescription}>{desc}</p>
-          ))}
+          <p className={styles.projectTitle}>{title}</p>
+          <p className={styles.projectDescription}>{description}</p>
+
           <div className={styles.projectTechStack}>
             <div className={styles.techList}>
               {techStack.map((tech, index) => (

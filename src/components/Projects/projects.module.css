@@ -1,0 +1,31 @@
+.title {
+  color: white;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+.projects {
+  display: flex;
+  flex-direction: row;
+  padding: 100px 0;
+  background-image: linear-gradient(to bottom, #222222, #111111);
+}
+
+.navigation {
+  width: calc((100vw - 1280px) / 2 - 96px);
+  padding: 0 48px;
+  color: white;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.projectListContainer {
+  max-width: 1280px;
+}
+
+.projectList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
