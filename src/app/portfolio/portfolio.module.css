@@ -1,84 +1,68 @@
-.container {
+.introduction {
   display: flex;
   flex-direction: column;
-  gap: 160px;
-  margin-top: 64px;
-  margin-bottom: 160px;
-}
-
-.title {
-  margin-bottom: 24px;
-}
-
-.nameContainer {
-  display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
-  font-size: 20px;
+  font-size: 24px;
+}
+
+.backToBlog {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.backToBlog:visited {
+  color: inherit;
+}
+
+.backToBlogIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.textFadeIn {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+.secondText {
+  display: flex;
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+  animation-delay: 1s;
 }
 
 .name {
-  font-size: 24px;
-  font-weight: 700;
+  color: #00f;
+  font-weight: 500;
+  margin-left: 8px;
 }
 
-.description {
-  margin-top: 48px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
-.descriptionTitle {
-  margin-bottom: 12px;
-  color: #3366ff;
-  font-size: 20px;
-  font-weight: 700;
+.container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
-.skills {}
-
-.skillListContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.skillListTitle {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.skillList {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-  gap: 16px;
-}
-
-.projects {}
-
-.projectList {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.contactItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.contactTitle {
-  font-weight: 700;
-}
-
-.contactList {
-  display: flex;
-  flex-direction: row;
-  gap: 64px;
-}
-
-.contactIconImage {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+.section {
+  width: calc(100% - 384px);
+  height: calc(100vh - 256px);
+  padding: 128px 192px;
 }
