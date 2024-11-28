@@ -1,0 +1,17 @@
+.contribution {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.contributionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.contributionImage {
+  width: 100%;
+  margin: 0 auto;
+}
