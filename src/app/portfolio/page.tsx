@@ -220,7 +220,7 @@ export default function PortfolioPage() {
                 </div>
               </div>
               <div className={styles.skill}>
-                <img src="/icons/nextjsIcon.png" alt="nextjs" className={styles.skillIcon} />
+                <img src="/icons/nextJSIcon.png" alt="nextjs" className={styles.skillIcon} />
                 <div className={styles.skillDetail}>
                   <h4>Next.js</h4>
                   <p>Github 개인 블로그를 만들기 위해 Next.js를 사용했습니다. 현재 페이지도 Next.js로 만들어졌습니다.</p>
