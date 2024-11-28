@@ -41,7 +41,7 @@ export default function Project({
       'styled-components': '/icons/styledComponentsIcon.png',
       'recoil': '/icons/recoilIcon.png',
       'zustand': '/icons/zustandIcon.png',
-      'react-native': '/icons/reactJSIcon.png',
+      'react-native': '/icons/reactIcon.png',
     };
     return iconMapping[techLower];
   };

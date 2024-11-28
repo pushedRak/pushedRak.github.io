@@ -248,7 +248,7 @@ export default function PortfolioPage() {
 
        {/* 프로젝트 */}
        <section className={styles.section}>
-        <h1 className={styles.title}>Projects</h1>
+        <h1 className={styles.title}>프로젝트</h1>
         <div className={styles.projectList}>
           {/* <Project
             image=""
@@ -290,7 +290,7 @@ export default function PortfolioPage() {
             githubLink="https://github.com/eum-silvertown/eum"
             image="/images/project-3.png"
             title="이음"
-            award="SSAFY 자율 프로젝트"
+            award="🏆 SSAFY 자율 프로젝트 우수상(3등)"
             period="2024.10 ~ 2024.11"
             teamSize={6}
             description={[
