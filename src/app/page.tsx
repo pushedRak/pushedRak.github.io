@@ -1,23 +1,34 @@
 import Link from 'next/link';
 import { getMdxFiles } from '@/utils/mdx';
 import styles from './page.module.css';
+import { formatDate } from '@/utils/dateFormat';
 
 const Home: React.FC = () => {
   const posts = getMdxFiles().slice(0, 5);
-  
+
   return (
     <div className={styles.container}>
-      <section>
+      <section className={styles.section}>
         <h2 className={styles.title}>최근 포스트</h2>
         <div className={styles.posts}>
           {posts.map((post) => (
-            <Link href={`/posts/${post.slug}`} key={post.slug} className={styles.link}>
-            <article className={styles.post}>
-              <h3>{post.metadata.title}</h3>
-              <p>{post.metadata.description}</p>
-              <time>{post.metadata.date}</time>
-            </article>
-          </Link>
+            <Link href={`/posts/${post.category.toLowerCase()}/${post.slug}`} key={post.slug} className={styles.post}>
+              <article className={styles.article}>
+                <div className={styles.thumbnailContainer}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.metadata.thumbnail} alt={post.metadata.title} className={styles.thumbnail} />
+                </div>
+                <div className={styles.content}>
+                  <h2>{post.metadata.title}</h2>
+                  <p className={styles.description}>{post.metadata.description}</p>
+                  <div className={styles.contentFooter}>
+                    <time>{formatDate(post.metadata.date)}</time>
+                    <p>·</p>
+                    <p>{post.slug.split('/')[1]}</p>
+                  </div>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
         <Link href="/posts" className={styles.more}>
