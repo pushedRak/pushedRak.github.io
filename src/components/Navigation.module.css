@@ -39,7 +39,7 @@
 }
 
 .logo img {
-  width: 36px; 
+  width: 36px;
   height: 36px;
   border-radius: 8px;
 }
@@ -53,8 +53,13 @@
   color: #24292e;
   text-decoration: none;
   font-size: 16px;
+  transition: font-weight 0.3s ease, text-shadow 0.3s ease;
 }
 
 .menu a:hover {
-  color: #0366d6;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.active {
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.75);
 }
