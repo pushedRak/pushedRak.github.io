@@ -11,7 +11,14 @@ interface PostListProps {
 }
 
 export default function PostList({ initialPosts }: PostListProps) {
-  const [selectedCategory, setSelectedCategory] = useState<'CS' | 'Development' | undefined>();
+  const [selectedCategory, setSelectedCategory] = useState<'cs' | 'development' | undefined>();
+  const categories = [{
+    category: 'cs',
+    name: 'CS',
+  }, {
+    category: 'development',
+    name: '개발',
+  }];
   const filteredPosts = selectedCategory
     ? initialPosts.filter(post => post.category === selectedCategory)
     : initialPosts;
@@ -26,14 +33,14 @@ export default function PostList({ initialPosts }: PostListProps) {
           전체
         </button>
         <button
-          className={`${styles.categoryButton} ${selectedCategory === 'CS' ? styles.active : ''}`}
-          onClick={() => setSelectedCategory('CS')}
+          className={`${styles.categoryButton} ${selectedCategory === 'cs' ? styles.active : ''}`}
+          onClick={() => setSelectedCategory('cs')}
         >
           CS
         </button>
         <button
-          className={`${styles.categoryButton} ${selectedCategory === 'Development' ? styles.active : ''}`}
-          onClick={() => setSelectedCategory('Development')}
+          className={`${styles.categoryButton} ${selectedCategory === 'development' ? styles.active : ''}`}
+          onClick={() => setSelectedCategory('development')}
         >
           개발
         </button>
@@ -53,7 +60,7 @@ export default function PostList({ initialPosts }: PostListProps) {
                 <div className={styles.contentFooter}>
                   <time>{formatDate(post.metadata.date)}</time>
                   <p>·</p>
-                  <p>{post.slug.split('/')[1]}</p>
+                  <p>{categories.find(category => category.category === post.category)?.name}</p>
                 </div>
               </div>
             </article>

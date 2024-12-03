@@ -5,6 +5,13 @@ import { formatDate } from '@/utils/dateFormat';
 
 const Home: React.FC = () => {
   const posts = getMdxFiles().slice(0, 5);
+  const categories = [{
+    category: 'cs',
+    name: 'CS',
+  }, {
+    category: 'development',
+    name: '개발',
+  }];
 
   return (
     <div className={styles.container}>
@@ -24,7 +31,7 @@ const Home: React.FC = () => {
                   <div className={styles.contentFooter}>
                     <time>{formatDate(post.metadata.date)}</time>
                     <p>·</p>
-                    <p>{post.slug.split('/')[1]}</p>
+                    <p>{categories.find(category => category.category === post.category)?.name}</p>
                   </div>
                 </div>
               </article>
