@@ -24,5 +24,6 @@
     "eslint-config-next": "15.0.3",
     "typescript": "^5"
   },
-  "homepage": "https://pushedRak.github.io/rak-blog"
+  "homepage": "https://pushedRak.github.io/rak-blog",
+  "type": "module"
 }
