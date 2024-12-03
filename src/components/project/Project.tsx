@@ -1,123 +1,90 @@
-'use client';
-
-import { useState } from 'react';
+/* eslint-disable @next/next/no-img-element */
 import styles from './Project.module.css';
-import CampforestDetail from './CampforestDetail';
-import NewLearnDetail from './NewLearnDetail';
-import EumDetail from './EumDetail';
-
 
 interface ProjectProps {
-  githubLink?: string;
+  number: string;
   image: string;
   title: string;
-  award: string;
+  subtitle: string;
+  description: string[];
   period: string;
   teamSize: number;
-  description: string[];
-  techStack: string[];
+  stack: string[];
+  award?: string;
+  githubLink?: string;
+  openModal: (projectId: string) => void;
 }
 
-
 export default function Project({
-  githubLink,
-  image,
-  title,
-  award,
-  period,
-  teamSize,
-  description,
-  techStack,
+   number, 
+   image, 
+   title, 
+   subtitle, 
+   description, 
+   period, 
+   teamSize, 
+   stack, 
+   award, 
+   githubLink,
+   openModal,
 }: ProjectProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const getTechIcon = (tech: string) => {
-    const techLower = tech.toLowerCase();
-    const iconMapping: { [key: string]: string } = {
-      'react': '/icons/reactIcon.png',
-      'typescript': '/icons/typescriptIcon.png',
-      'tailwind': '/icons/tailwindIcon.png',
-      'redux': '/icons/reduxIcon.png',
-      'styled-components': '/icons/styledComponentsIcon.png',
-      'recoil': '/icons/recoilIcon.png',
-      'zustand': '/icons/zustandIcon.png',
-      'react-native': '/icons/reactIcon.png',
-    };
-    return iconMapping[techLower];
-  };
-
-  const renderDetailComponent = () => {
-    switch (title) {
-      case 'Campforest':
-        return <CampforestDetail />;
-      case 'NewLearn':
-        return <NewLearnDetail />;
-      case '이음':
-        return <EumDetail />;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div
-      className={`${styles.project} ${isExpanded ? styles.expanded : ''}`}
-      onClick={() => setIsExpanded(!isExpanded)}
-    >
-      <div className={styles.projectMainContent}>
-        <div className={styles.projectImageContainer}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={image ? image : "/images/noImage.png"}
-            alt={`${title} 프로젝트 이미지`}
-            className={styles.projectImage}
-          />
-        </div>
-        <div className={styles.projectDescriptionContainer}>
-          <div className={styles.projectHeader}>
-            <div className={styles.projectTitleContainer}>
-              <p className={styles.projectTitle}>{title}</p>
-              {githubLink &&
-                <a href={githubLink} target="_blank" rel="noopener noreferrer" className={styles.githubLink}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/icons/githubIcon.png" alt="github" className={styles.githubIcon} />
-                  <p>GitHub</p>
-                </a>
-              }
-            </div>
-            <p className={styles.projectAward}>{award}</p>
+    <section className={styles.projectSection}>
+      <p className={styles.projectNumber}>{number}</p>
+      <img
+        src={image}
+        alt="projectImage"
+        className={styles.projectImage}
+      />
+      <div className={styles.projectContent}>
+        <h1 className={styles.projectTitle}>
+          {title}
+          <div className={styles.projectLink}>
+            <a href={githubLink} target="_blank" rel="noopener noreferrer">
+              <img
+                src="/icons/githubIcon.png"
+                alt="github"
+                className={styles.projectLinkIcon}
+              />
+            </a>
           </div>
-          <div className={styles.projectPeriod}>
-            <p>{period}</p>
-            <p>{teamSize}명</p>
-          </div>
+        </h1>
+        <h2 className={styles.projectSubtitle}>
+          {subtitle}
+        </h2>
+        <div className={styles.projectDescription}>
           {description.map((desc, index) => (
-            <p key={index} className={styles.projectDescription}>{desc}</p>
+            <p key={index}>{desc}</p>
           ))}
-          <div className={styles.projectTechStack}>
-            <div className={styles.techList}>
-              {techStack.map((tech, index) => (
-                <span key={index} className={styles.tech}>
-                  {getTechIcon(tech) && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={getTechIcon(tech)}
-                      alt={tech}
-                      className={styles.techIcon}
-                    />
-                  )}
-                  {tech}
-                </span>
-              ))}
-            </div>
+        </div>
+        <div className={styles.projectMore} onClick={() => openModal(number)}>
+            더 보기
+        </div>
+        <div className={styles.projectFooter}>
+          <div className={styles.projectAward}>
+            {award}
+          </div>
+          <div className={styles.projectInfo}>
+            <div>{period}</div>
+            <p>|</p>
+            <div>{teamSize}인</div>
+            <p>|</p>
+            <div>FrontEnd</div>
+          </div>
+          <div className={styles.projectStack}>
+            {stack.map((icon, index) => (
+              <div className={styles.iconWrapper} key={index}>
+                <img
+                  src={`/icons/${icon}Icon.png`}
+                  alt={icon}
+                  className={styles.projectStackIcon}
+                />
+                <div className={styles.iconLabel}>{icon}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      {isExpanded && (
-        <div className={styles.projectDetails}>
-          {renderDetailComponent()}
-        </div>
-      )}
-    </div>
-  );
+    </section>
+  )
 }
