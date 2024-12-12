@@ -2,8 +2,72 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import styles from './Navigation.module.css';
 import { usePathname } from 'next/navigation';
+import styled from 'styled-components';
+
+const Spacer = styled.div`
+  height: 64px;
+`;
+
+const Nav = styled.nav<{ $visible: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e1e4e8;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  transform: translateY(${props => props.$visible ? '0' : '-100%'});
+`;
+
+const Container = styled.div`
+  max-width: 1012px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #24292e;
+  text-decoration: none;
+
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+`;
+
+const Menu = styled.div`
+  display: flex;
+  gap: 24px;
+
+  a {
+    color: #24292e;
+    text-decoration: none;
+    font-size: 16px;
+    transition: font-weight 0.3s ease, text-shadow 0.3s ease;
+
+    &:hover {
+      text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    }
+
+    &.active {
+      text-shadow: 0 0 1px rgba(0, 0, 0, 0.75);
+    }
+  }
+`;
+
 export default function Navigation() {
   const pathname = usePathname();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -22,20 +86,20 @@ export default function Navigation() {
 
   return (
     <>
-      <div className={styles.space} />
-      <nav className={`${styles.nav} ${visible ? '' : styles.hidden}`}>
-        <div className={styles.container}>
-          <Link href="/" className={styles.logo}>
+      <Spacer />
+      <Nav $visible={visible}>
+        <Container>
+          <Logo href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icons/logo.png" alt="logo" /> Rak Blog
-          </Link>
-          <div className={styles.menu}>
-            <Link href="/" className={pathname === '/' ? styles.active : ''}>Home</Link>
-            <Link href="/posts" className={pathname === '/posts' ? styles.active : ''}>Posts</Link>
-            <Link href="/portfolio" className={pathname === '/portfolio' ? styles.active : ''}>Portfolio</Link>
-          </div>
-        </div>
-      </nav>
+          </Logo>
+          <Menu>
+            <Link href="/" className={pathname === '/' ? 'active' : ''}>Home</Link>
+            <Link href="/posts" className={pathname === '/posts' ? 'active' : ''}>Posts</Link>
+            <Link href="/portfolio" className={pathname === '/portfolio' ? 'active' : ''}>Portfolio</Link>
+          </Menu>
+        </Container>
+      </Nav>
     </>
   );
 }

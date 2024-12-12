@@ -1,6 +1,33 @@
 import { useState } from "react";
-import styles from "./Projects.module.css";
+import styled from "styled-components";
 import Project from "./Project";
+
+const Container = styled.div`
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const ProjectList = styled.div<{ $currentProject: number }>`
+  width: 300%;
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.7s ease-in-out;
+  position: relative;
+  transform: translateX(-${props => props.$currentProject * 33.333}%);
+`;
+
+const NavigationButton = styled.div<{ $direction: 'prev' | 'next', $disabled: boolean }>`
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  ${props => props.$direction === 'prev' ? 'left: 10rem;' : 'right: 10rem;'}
+  transform: translateY(-50%) scaleY(2);
+  font-size: 3rem;
+  opacity: ${props => props.$disabled ? 0.3 : 1};
+  cursor: ${props => props.$disabled ? 'default' : 'pointer'};
+`;
 
 interface ProjectsProps { 
   openModal: (projectId: string) => void;
@@ -20,26 +47,23 @@ export default function Projects({ openModal }: ProjectsProps) {
   }
 
   return (
-    <div className={styles.container}>
-      <div 
+    <Container>
+      <NavigationButton 
         onClick={handlePrevProject} 
-        className={styles.prevNavigationButton}
-        style={{ opacity: currentProject === 0 ? 0.3 : 1 }}
+        $direction="prev"
+        $disabled={currentProject === 0}
       >
         {'<'}
-      </div>
-      <div 
+      </NavigationButton>
+      <NavigationButton 
         onClick={handleNextProject} 
-        className={styles.nextNavigationButton}
-        style={{ opacity: currentProject === 2 ? 0.3 : 1 }}
+        $direction="next"
+        $disabled={currentProject === 2}
       >
         {'>'}
-      </div>
+      </NavigationButton>
 
-      <div 
-        className={styles.projectList} 
-        style={{ transform: `translateX(-${currentProject * 33.333}%)` }}
-      >
+      <ProjectList $currentProject={currentProject}>
         <Project 
           number="01"
           image="/images/project-1.png"
@@ -79,7 +103,7 @@ export default function Projects({ openModal }: ProjectsProps) {
           githubLink="https://github.com/eum-silvertown/eum"
           openModal={openModal}
         />
-      </div>
-    </div>
-  )
+      </ProjectList>
+    </Container>
+  );
 }
