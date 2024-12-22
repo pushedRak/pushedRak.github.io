@@ -44,11 +44,11 @@ const Content = styled.div`
     margin-bottom: 1.2rem;
   }
 
-  code {
+  pre {
     background-color: #f4f4f4;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     border-radius: 4px;
-    font-family: monospace;
+    line-height: 1.5;
   }
 `;
 

@@ -19,7 +19,7 @@ export function getMdxFiles() {
 
   // 날짜순으로 정렬 (최신순)
   return posts.sort((post1, post2) => {
-    return post1.metadata.date > post2.metadata.date ? -1 : 1;
+    return post1.metadata.createdAt > post2.metadata.createdAt ? -1 : 1;
   });
 }
 

@@ -23,6 +23,10 @@ export default function RootLayout({
 
   return (
     <html lang="ko">
+      <head>
+        <title>Rak Blog</title>
+        <link rel="icon" href="/icons/favicon.ico" />
+      </head>
       <body>
         <StyledComponentsRegistry>
           {!isPortfolio && <Navigation />}

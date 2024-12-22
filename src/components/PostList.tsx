@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 import { PostData } from '@/types/post';
-import { formatDate } from '@/utils/dateFormat';
+import Post from './Post';
 
 const Container = styled.div`
   margin-top: 32px;
@@ -16,53 +15,10 @@ const Posts = styled.div`
   gap: 1rem;
 `;
 
-const PostLink = styled(Link)`
-  padding: 1.5rem 0;
-  border-top: 1px solid #e0e0e0;
-  text-decoration: none;
-  
-  &:last-child {
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  &:visited {
-    color: inherit;
-  }
-`;
-
-const Article = styled.article`
+const NoPostMessage = styled.div`
   display: flex;
-  gap: 16px;
-`;
-
-const ThumbnailContainer = styled.div`
-  width: 200px;
-  height: 150px;
-`;
-
-const Thumbnail = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Description = styled.p`
-  padding: 0.75rem 0;
-`;
-
-const ContentFooter = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: auto;
-  font-size: 0.875rem;
-  color: #666;
-`;
+  margin: 3rem auto;
+`
 
 const Categories = styled.div`
   display: flex;
@@ -80,22 +36,51 @@ const CategoryButton = styled.button<{ $active: boolean }>`
   transition: all 0.2s ease;
 `;
 
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+`
+
+const Button = styled.button<{ $selected: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  background-color: ${props => props.$selected ? "#000" : "transparent"};
+  color: ${props => props.$selected ? "#fff" : "inherit"};
+  border: none;
+  border-radius: 9999px;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer;
+`
+
 interface PostListProps {
   initialPosts: PostData[];
 }
 
+const POSTS_PER_PAGE = 5;
+
 export default function PostList({ initialPosts }: PostListProps) {
-  const [selectedCategory, setSelectedCategory] = useState<'cs' | 'development' | undefined>();
+  const [selectedCategory, setSelectedCategory] = useState<string>();
+  const [currentPage, setCurrentpage] = useState(1);
   const categories = [{
     category: 'cs',
     name: 'CS',
   }, {
     category: 'development',
     name: '개발',
+  }, {
+    category: 'algoritym',
+    name: '알고리즘',
   }];
   const filteredPosts = selectedCategory
     ? initialPosts.filter(post => post.category === selectedCategory)
     : initialPosts;
+  const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
   return (
     <Container>
@@ -106,40 +91,34 @@ export default function PostList({ initialPosts }: PostListProps) {
         >
           전체
         </CategoryButton>
-        <CategoryButton
-          $active={selectedCategory === 'cs'}
-          onClick={() => setSelectedCategory('cs')}
-        >
-          CS
-        </CategoryButton>
-        <CategoryButton
-          $active={selectedCategory === 'development'}
-          onClick={() => setSelectedCategory('development')}
-        >
-          개발
-        </CategoryButton>
+        {categories.map((category, index) => (
+          <CategoryButton 
+            key={index}
+            $active={selectedCategory === category.category}
+            onClick={() => setSelectedCategory(category.category)}
+          >
+            {category.name}
+          </CategoryButton>
+          ))}
       </Categories>
 
       <Posts>
-        {filteredPosts.map((post) => (
-          <PostLink href={`/posts/${post.category.toLowerCase()}/${post.slug}`} key={post.slug}>
-            <Article>
-              <ThumbnailContainer>
-                <Thumbnail src={post.metadata.thumbnail} alt={post.metadata.title} />
-              </ThumbnailContainer>
-              <Content>
-                <h2>{post.metadata.title}</h2>
-                <Description>{post.metadata.description}</Description>
-                <ContentFooter>
-                  <time>{formatDate(post.metadata.date)}</time>
-                  <p>·</p>
-                  <p>{categories.find(category => category.category === post.category)?.name}</p>
-                </ContentFooter>
-              </Content>
-            </Article>
-          </PostLink>
-        ))}
+        {paginatedPosts.length !== 0 ? paginatedPosts.map((post, index) => (
+          <Post key={index} post={post} />
+        )) : (
+          <NoPostMessage>
+            포스트가 없습니다.
+          </NoPostMessage>
+        )}
       </Posts>
+
+      <Pagination>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <Button $selected={index + 1 === currentPage} key={index + 1} onClick={() => setCurrentpage(index + 1)}>
+            {index + 1}
+          </Button>
+        ))}
+      </Pagination>
     </Container>
   );
 }
