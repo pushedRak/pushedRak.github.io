@@ -5,6 +5,9 @@ import '@/app/globals.css';
 import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 import StyledComponentsRegistry from '@/lib/registry';
+import Script from 'next/script';
+
+const GA_TRACKING_ID = process.env.GA_TRANKING_ID;
 
 const Main = styled.main<{ $isPortfolio: boolean }>`
   padding-top: ${props => props.$isPortfolio ? '0' : '80px'};
@@ -24,6 +27,24 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_TRACKING_ID}', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
         <title>Rak Blog</title>
         <link rel="icon" href="/icons/favicon.ico" />
       </head>
