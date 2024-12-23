@@ -42,8 +42,13 @@ export default function AnalyticsCounter() {
 
   useEffect(() => {
     async function fetchStats() {
+      const isProduction = process.env.NODE_ENV === 'production';
+      const dataUrl = isProduction
+        ? '/analytics-data.json' // GitHub Pages에서 사용되는 경로
+        : 'public/analytics-data.json'; // 로컬 개발 환경 경로
+  
       try {
-        const response = await fetch('/analytics-data.json');
+        const response = await fetch(dataUrl);
         if (!response.ok) {
           throw new Error('Failed to fetch analytics data');
         }
@@ -55,7 +60,7 @@ export default function AnalyticsCounter() {
         console.error('Error fetching stats:', error);
       }
     }
-
+  
     fetchStats();
   }, []);
 

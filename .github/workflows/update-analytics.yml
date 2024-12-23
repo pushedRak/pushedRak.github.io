@@ -2,13 +2,13 @@ name: Update Analytics Data
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 매시 정각에 실행
-  workflow_dispatch:      # 수동 실행 옵션 추가
+    - cron: '*/30 * * * *'  # 30분마다 실행
+  workflow_dispatch:      # 수동 실행 옵션
 
 jobs:
   update-analytics:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       
@@ -25,18 +25,11 @@ jobs:
           GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
           GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
-        run: |
-          echo "Checking environment variables..."
-          if [ -n "$GOOGLE_CLIENT_EMAIL" ]; then
-            echo "GOOGLE_CLIENT_EMAIL is set"
-          else
-            echo "GOOGLE_CLIENT_EMAIL is not set"
-          fi
-          node scripts/updateAnalytics.js
-          
-      - name: Commit and push if changed
-        run: |
-          git config --global user.name 'GitHub Action'
-          git config --global user.email 'action@github.com'
-          git add public/analytics-data.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update analytics data" && git push)
+        run: node scripts/updateAnalytics.js
+
+      - name: Deploy analytics data to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
+          keep_files: false  # 커밋 내역 없이 덮어쓰기

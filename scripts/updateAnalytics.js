@@ -16,13 +16,13 @@ async function fetchAnalyticsData() {
       isNumeric: /^\d+$/.test(process.env.GA4_PROPERTY_ID),
     });
 
-    // 총 방문자 수 및 페이지뷰 가져오기 (2024-12-01 기준)
+    // 2024-12-01 기준 총 방문자 수와 총 페이지 뷰
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: '2024-12-01', // 총 방문자 수를 측정할 시작 날짜
-          endDate: 'today',        // 오늘까지 데이터 가져오기
+          startDate: '2024-12-01',
+          endDate: 'today',
         },
       ],
       metrics: [
@@ -31,7 +31,6 @@ async function fetchAnalyticsData() {
       ],
     });
 
-    // 오늘 방문자 수 가져오기
     const [todayResponse] = await analyticsDataClient.runReport({
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
       dateRanges: [
@@ -53,16 +52,17 @@ async function fetchAnalyticsData() {
       message: hasData ? 'Data available' : 'No data available',
       data: hasData
         ? {
-            totalUsers: response.rows[0].metricValues[0]?.value || '0',
-            screenPageViews: response.rows[0].metricValues[1]?.value || '0',
+            totalUsers: response.rows[0]?.metricValues[0]?.value || '0',
+            screenPageViews: response.rows[0]?.metricValues[1]?.value || '0',
             todayUsers: todayResponse.rows[0]?.metricValues[0]?.value || '0',
           }
         : null,
     };
 
     const filePath = path.join(process.cwd(), 'public', 'analytics-data.json');
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.writeFile(filePath, JSON.stringify(analyticsData, null, 2));
-    console.log('Analytics data file created');
+    console.log('Analytics data file created successfully:', filePath);
   } catch (error) {
     console.error('Error details:', {
       message: error.message,
