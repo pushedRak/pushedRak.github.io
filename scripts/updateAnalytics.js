@@ -22,21 +22,26 @@ async function fetchAnalyticsData() {
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: 'today',
-          endDate: 'today',
+          startDate: '30daysAgo',
+          endDate: 'yesterday',
         },
       ],
       dimensions: [
         { name: 'date' },
-        { name: 'pageTitle' },
+        { name: 'eventName' },
       ],
       metrics: [
-        { name: 'activeUsers' },
+        { name: 'eventCount' },
         { name: 'screenPageViews' },
-        { name: 'sessions' },
       ],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          stringFilter: { value: 'page_view' },
+        },
+      },
     });
-
+    
     console.log('GA4 API Response:', JSON.stringify(response, null, 2));
 
     if (!response.rows || response.rows.length === 0) {
