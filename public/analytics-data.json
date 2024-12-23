@@ -1,6 +1,19 @@
 {
-  "timestamp": "2024-12-23T23:31:30.392Z",
-  "hasData": false,
-  "message": "No data available",
-  "propertyId": "470943343"
+  "timestamp": "2024-12-23T23:44:11.221Z",
+  "message": "Data available",
+  "data": [
+    {
+      "dimensionValues": [],
+      "metricValues": [
+        {
+          "value": "2",
+          "oneValue": "value"
+        },
+        {
+          "value": "15",
+          "oneValue": "value"
+        }
+      ]
+    }
+  ]
 }
