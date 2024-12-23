@@ -18,7 +18,7 @@ jobs:
           node-version: '18'
           
       - name: Install dependencies
-        run: npm install @google-analytics/data
+        run: npm install @google-analytics/data @google-analytics/admin
         
       - name: Update analytics data
         env:
