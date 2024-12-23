@@ -4,17 +4,25 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { PostData } from '@/types/post';
 import Post from './Post';
+import AnalyticsCounter from './AnalyticsCounter';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
   margin-top: 32px;
+  min-height: calc(100vh - 96px);
 `;
 
 const Section = styled.section`
   display: flex;
   flex-direction: column;
+  flex: 1;
+`
+
+const PostListSection = styled(Section)`
+  flex: 3;  
   gap: 16px;
+  width: 1024px;
+  margin: 0 auto;
 `;
 
 const Posts = styled.div`
@@ -42,6 +50,8 @@ export default function HomeContent({ posts }: HomeContentProps) {
   return (
     <Container>
       <Section>
+      </Section>
+      <PostListSection>
         <Title>최근 포스트</Title>
         <Posts>
           {posts.map((post, index) => (
@@ -51,6 +61,9 @@ export default function HomeContent({ posts }: HomeContentProps) {
         <More href="/posts">
           모든 포스트 보기 →
         </More>
+      </PostListSection>
+      <Section>
+        <AnalyticsCounter />
       </Section>
     </Container>
   );

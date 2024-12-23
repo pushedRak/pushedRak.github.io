@@ -3,18 +3,10 @@
 import Navigation from '@/components/NavigationBar';
 import '@/app/globals.css';
 import { usePathname } from 'next/navigation';
-import styled from 'styled-components';
 import StyledComponentsRegistry from '@/lib/registry';
 import Script from 'next/script';
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID;
-
-const Main = styled.main<{ $isPortfolio: boolean }>`
-  padding-top: ${props => props.$isPortfolio ? '0' : '80px'};
-  max-width: ${props => props.$isPortfolio ? 'none' : '1012px'};
-  margin: ${props => props.$isPortfolio ? '0' : '0 auto'};
-  padding: ${props => props.$isPortfolio ? '0' : '0 16px'};
-`;
 
 export default function RootLayout({
   children,
@@ -51,9 +43,9 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           {!isPortfolio && <Navigation />}
-          <Main $isPortfolio={isPortfolio}>
+          <main>
             {children}
-          </Main>
+          </main>
         </StyledComponentsRegistry>
       </body>
     </html>
