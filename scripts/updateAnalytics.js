@@ -33,13 +33,7 @@ async function fetchAnalyticsData() {
       metrics: [
         { name: 'eventCount' },
         { name: 'screenPageViews' },
-      ],
-      dimensionFilter: {
-        filter: {
-          fieldName: 'eventName',
-          stringFilter: { value: 'page_view' },
-        },
-      },
+      ]
     });
     
     console.log('GA4 API Response:', JSON.stringify(response, null, 2));
