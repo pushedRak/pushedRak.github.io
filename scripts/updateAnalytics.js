@@ -22,7 +22,7 @@ async function fetchAnalyticsData() {
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: '30daysAgo',
+          startDate: 'today',
           endDate: 'today',
         },
       ],
