@@ -1,4 +1,5 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
+import { GoogleAnalyticsAdmin } from '@google-analytics/admin';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -8,6 +9,17 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
     private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
   },
 });
+
+const analyticsAdmin = new GoogleAnalyticsAdmin();
+
+async function checkAccess() {
+  try {
+    const [accounts] = await analyticsAdmin.listAccountSummaries();
+    console.log('Available accounts:', accounts);
+  } catch (error) {
+    console.error('Access check error:', error.message);
+  }
+}
 
 async function fetchAnalyticsData() {
   try {
@@ -27,7 +39,8 @@ async function fetchAnalyticsData() {
       property_id: process.env.GA4_PROPERTY_ID,
     });
 
-    console.log('Full GA4 property string:', `properties/${process.env.GA4_PROPERTY_ID}`);
+    // GA4 Property ID는 보통 숫자로만 이루어진 형태입니다 (예: 123456789)
+    console.log('GA4 Property ID format check:', process.env.GA4_PROPERTY_ID.match(/^\d+$/));
 
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
@@ -70,4 +83,5 @@ async function fetchAnalyticsData() {
   }
 }
 
+checkAccess();
 fetchAnalyticsData();
