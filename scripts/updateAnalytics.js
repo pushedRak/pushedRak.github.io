@@ -1,7 +1,6 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
-import { GoogleAnalyticsAdmin } from '@google-analytics/admin';
-import fs from 'fs/promises';
-import path from 'path';
+import pkg from '@google-analytics/admin';
+const { GoogleAnalyticsAdmin } = pkg;
 
 const analyticsDataClient = new BetaAnalyticsDataClient({
   credentials: {
@@ -10,12 +9,18 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   },
 });
 
-const analyticsAdmin = new GoogleAnalyticsAdmin();
+const analyticsAdmin = new GoogleAnalyticsAdmin({
+  credentials: {
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  },
+});
 
 async function checkAccess() {
   try {
+    console.log('GA4 Property ID format check:', process.env.GA4_PROPERTY_ID.match(/^\d+$/));
     const [accounts] = await analyticsAdmin.listAccountSummaries();
-    console.log('Available accounts:', accounts);
+    console.log('Available accounts:', JSON.stringify(accounts, null, 2));
   } catch (error) {
     console.error('Access check error:', error.message);
   }
@@ -23,15 +28,8 @@ async function checkAccess() {
 
 async function fetchAnalyticsData() {
   try {
-    const property = await analyticsDataClient.getProperty({
-      name: `properties/${process.env.GA4_PROPERTY_ID}`
-    });
-    console.log('Property details:', JSON.stringify(property, null, 2));
-  } catch (error) {
-    console.error('Error getting property:', error.message);
-  }
-  
-  try {
+    await checkAccess();
+    
     console.log('Fetching analytics data...');
     console.log('Environment Variables:', {
       client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -39,14 +37,11 @@ async function fetchAnalyticsData() {
       property_id: process.env.GA4_PROPERTY_ID,
     });
 
-    // GA4 Property ID는 보통 숫자로만 이루어진 형태입니다 (예: 123456789)
-    console.log('GA4 Property ID format check:', process.env.GA4_PROPERTY_ID.match(/^\d+$/));
-
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: '7daysAgo',
+          startDate: '90daysAgo',
           endDate: 'today'
         },
       ],
@@ -54,7 +49,7 @@ async function fetchAnalyticsData() {
         { name: 'date' }
       ],
       metrics: [
-        { name: 'totalUsers' }
+        { name: 'activeUsers' }
       ]
     });
     
@@ -67,9 +62,7 @@ async function fetchAnalyticsData() {
 
     const analyticsData = response.rows.map(row => ({
       date: row.dimensionValues?.[0]?.value,
-      eventName: row.dimensionValues?.[1]?.value,
-      eventCount: row.metricValues?.[0]?.value || '0',
-      pageViews: row.metricValues?.[1]?.value || '0'
+      users: row.metricValues?.[0]?.value || '0',
     }));
 
     const filePath = path.join(process.cwd(), 'public', 'analytics-data.json');
@@ -83,5 +76,4 @@ async function fetchAnalyticsData() {
   }
 }
 
-checkAccess();
 fetchAnalyticsData();
