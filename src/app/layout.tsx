@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import StyledComponentsRegistry from '@/lib/registry';
 import Script from 'next/script';
 
-const GA_TRACKING_ID = process.env.GA_TRANKING_ID;
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRANKING_ID;
 
 const Main = styled.main<{ $isPortfolio: boolean }>`
   padding-top: ${props => props.$isPortfolio ? '0' : '80px'};

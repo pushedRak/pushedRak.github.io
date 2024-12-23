@@ -34,7 +34,12 @@ jobs:
 
       - name: Setting .env
         run: |
-          echo "GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }}" >> .env
+          echo "NEXT_PUBLIC_GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }}" >> .env
+
+      - name: Debug env
+        run: |
+          echo "Checking .env file content:"
+          cat .env
 
       - name: Detect package manager
         id: detect-package-manager
