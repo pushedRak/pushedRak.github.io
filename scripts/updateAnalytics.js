@@ -32,6 +32,8 @@ async function fetchAnalyticsData() {
       ],
     });
 
+    console.log('GA4 API Response:', JSON.stringify(response, null, 2));
+
     const users = response.rows?.[0]?.metricValues?.[0]?.value || '0';
     const pageViews = response.rows?.[0]?.metricValues?.[1]?.value || '0';
     const sessions = response.rows?.[0]?.metricValues?.[2]?.value || '0';
