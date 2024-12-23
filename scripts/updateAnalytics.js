@@ -14,7 +14,7 @@ async function fetchAnalyticsData() {
     console.log('Fetching analytics data...');
     console.log('Environment Variables:', {
       client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY?.substring(0, 10) + '...', // 민감 정보 일부만 출력
+      private_key: process.env.GOOGLE_PRIVATE_KEY?.substring(0, 10) + '...',
       property_id: process.env.GA4_PROPERTY_ID,
     });
 
@@ -25,6 +25,10 @@ async function fetchAnalyticsData() {
           startDate: '30daysAgo',
           endDate: 'today',
         },
+      ],
+      dimensions: [
+        { name: 'date' },
+        { name: 'pageTitle' },
       ],
       metrics: [
         { name: 'activeUsers' },
@@ -40,22 +44,13 @@ async function fetchAnalyticsData() {
       process.exit(1);
     }
 
-    const firstRow = response.rows[0];
-    if (!firstRow.metricValues || firstRow.metricValues.length < 3) {
-      console.error('Metric values are missing or incomplete in the first row:', firstRow);
-      process.exit(1);
-    }
-
-    const users = firstRow.metricValues[0]?.value || '0';
-    const pageViews = firstRow.metricValues[1]?.value || '0';
-    const sessions = firstRow.metricValues[2]?.value || '0';
-
-    const analyticsData = {
-      users,
-      pageViews,
-      sessions,
-      lastUpdated: new Date().toISOString(),
-    };
+    const analyticsData = response.rows.map(row => ({
+      date: row.dimensionValues?.[0]?.value,
+      pageTitle: row.dimensionValues?.[1]?.value,
+      users: row.metricValues?.[0]?.value || '0',
+      pageViews: row.metricValues?.[1]?.value || '0',
+      sessions: row.metricValues?.[2]?.value || '0',
+    }));
 
     const filePath = path.join(process.cwd(), 'public', 'analytics-data.json');
     await fs.writeFile(filePath, JSON.stringify(analyticsData, null, 2));
