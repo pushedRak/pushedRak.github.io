@@ -27,19 +27,30 @@ const StatItem = styled.div`
   }
 `;
 
+interface Stats {
+  totalUsers: string;
+  screenPageViews: string;
+  todayUsers: string;
+}
+
 export default function AnalyticsCounter() {
-  const [stats, setStats] = useState({ pageviews: '0', users: '0', sessions: '0' });
+  const [stats, setStats] = useState<Stats>({
+    totalUsers: '0',
+    screenPageViews: '0',
+    todayUsers: '0',
+  });
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        // 이 부분이 변경되었습니다
-        const response = await fetch('/api/analytics');
+        const response = await fetch('/analytics-data.json');
         if (!response.ok) {
           throw new Error('Failed to fetch analytics data');
         }
         const data = await response.json();
-        setStats(data);
+        if (data.message === 'Data available' && data.data) {
+          setStats(data.data);
+        }
       } catch (error) {
         console.error('Error fetching stats:', error);
       }
@@ -51,16 +62,16 @@ export default function AnalyticsCounter() {
   return (
     <StatsContainer>
       <StatItem>
-        <h3>총 방문자</h3>
-        <p>{stats.users}</p>
+        <h3>Total</h3>
+        <p>{stats.totalUsers}</p>
       </StatItem>
       <StatItem>
-        <h3>총 세션</h3>
-        <p>{stats.sessions}</p>
+        <h3>Today</h3>
+        <p>{stats.todayUsers}</p>
       </StatItem>
       <StatItem>
-        <h3>총 페이지뷰</h3>
-        <p>{stats.pageviews}</p>
+        <h3>Page View</h3>
+        <p>{stats.screenPageViews}</p>
       </StatItem>
     </StatsContainer>
   );
