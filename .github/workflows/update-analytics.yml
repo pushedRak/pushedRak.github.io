@@ -21,11 +21,18 @@ jobs:
         run: npm install @google-analytics/data
         
       - name: Update analytics data
-        run: node scripts/updateAnalytics.js
+        run: |
+          echo "Checking environment variables..."
+          if [ -n "$GOOGLE_CLIENT_EMAIL" ]; then
+            echo "GOOGLE_CLIENT_EMAIL is set"
+          else
+            echo "GOOGLE_CLIENT_EMAIL is not set"
+          fi
+          node scripts/updateAnalytics.js
         env:
           GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
           GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
-          GA_VIEW_ID: ${{ secrets.GA_VIEW_ID }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           
       - name: Commit and push if changed
         run: |
