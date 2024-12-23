@@ -32,12 +32,17 @@ async function fetchAnalyticsData() {
       ],
     });
 
+    const users = response.rows?.[0]?.metricValues?.[0]?.value || '0';
+    const pageViews = response.rows?.[0]?.metricValues?.[1]?.value || '0';
+    const sessions = response.rows?.[0]?.metricValues?.[2]?.value || '0';
+
     const analyticsData = {
-      users: response.rows?.[0].metricValues[0].value || '0',
-      pageViews: response.rows?.[0].metricValues[1].value || '0',
-      sessions: response.rows?.[0].metricValues[2].value || '0',
+      users,
+      pageViews,
+      sessions,
       lastUpdated: new Date().toISOString(),
     };
+
 
     const filePath = path.join(process.cwd(), 'public', 'analytics-data.json');
     await fs.writeFile(filePath, JSON.stringify(analyticsData, null, 2));
