@@ -11,6 +11,15 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
 
 async function fetchAnalyticsData() {
   try {
+    const property = await analyticsDataClient.getProperty({
+      name: `properties/${process.env.GA4_PROPERTY_ID}`
+    });
+    console.log('Property details:', JSON.stringify(property, null, 2));
+  } catch (error) {
+    console.error('Error getting property:', error.message);
+  }
+  
+  try {
     console.log('Fetching analytics data...');
     console.log('Environment Variables:', {
       client_email: process.env.GOOGLE_CLIENT_EMAIL,
@@ -18,21 +27,21 @@ async function fetchAnalyticsData() {
       property_id: process.env.GA4_PROPERTY_ID,
     });
 
+    console.log('Full GA4 property string:', `properties/${process.env.GA4_PROPERTY_ID}`);
+
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${process.env.GA4_PROPERTY_ID}`,
       dateRanges: [
         {
-          startDate: '30daysAgo',
-          endDate: 'yesterday',
+          startDate: '7daysAgo',
+          endDate: 'today'
         },
       ],
       dimensions: [
-        { name: 'date' },
-        { name: 'eventName' },
+        { name: 'date' }
       ],
       metrics: [
-        { name: 'eventCount' },
-        { name: 'screenPageViews' },
+        { name: 'totalUsers' }
       ]
     });
     
