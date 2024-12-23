@@ -51,10 +51,9 @@ async function fetchAnalyticsData() {
 
     const analyticsData = response.rows.map(row => ({
       date: row.dimensionValues?.[0]?.value,
-      pageTitle: row.dimensionValues?.[1]?.value,
-      users: row.metricValues?.[0]?.value || '0',
-      pageViews: row.metricValues?.[1]?.value || '0',
-      sessions: row.metricValues?.[2]?.value || '0',
+      eventName: row.dimensionValues?.[1]?.value,
+      eventCount: row.metricValues?.[0]?.value || '0',
+      pageViews: row.metricValues?.[1]?.value || '0'
     }));
 
     const filePath = path.join(process.cwd(), 'public', 'analytics-data.json');
@@ -62,6 +61,8 @@ async function fetchAnalyticsData() {
     console.log('Analytics data updated successfully');
   } catch (error) {
     console.error('Error updating analytics data:', error);
+    if (error.message) console.error('Error message:', error.message);
+    if (error.stack) console.error('Error stack:', error.stack);
     process.exit(1);
   }
 }
