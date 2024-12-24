@@ -1,9 +1,9 @@
 {
-  "timestamp": "2024-12-24T09:11:22.466Z",
+  "timestamp": "2024-12-24T10:11:38.061Z",
   "message": "Data available",
   "data": {
     "totalUsers": "3",
-    "screenPageViews": "25",
-    "todayUsers": "1"
+    "screenPageViews": "34",
+    "todayUsers": "3"
   }
 }
