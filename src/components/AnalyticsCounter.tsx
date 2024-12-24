@@ -11,7 +11,10 @@ const StatsContainer = styled.div`
 `;
 
 const StatItem = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   
   h3 {
     margin: 0;
@@ -20,8 +23,7 @@ const StatItem = styled.div`
   }
   
   p {
-    margin: 0.5rem 0 0;
-    font-size: 1.5rem;
+    margin: 0;
     font-weight: bold;
     color: #212529;
   }
@@ -42,10 +44,7 @@ export default function AnalyticsCounter() {
 
   useEffect(() => {
     async function fetchStats() {
-      const isProduction = process.env.NODE_ENV === 'production';
-      const dataUrl = isProduction
-        ? '/analytics-data.json' // GitHub Pages에서 사용되는 경로
-        : 'public/analytics-data.json'; // 로컬 개발 환경 경로
+      const dataUrl = '/analytics-data.json'
   
       try {
         const response = await fetch(dataUrl);
@@ -68,15 +67,15 @@ export default function AnalyticsCounter() {
     <StatsContainer>
       <StatItem>
         <h3>Total</h3>
-        <p>{stats.totalUsers}</p>
+        <p>{stats.totalUsers || 0}</p>
       </StatItem>
       <StatItem>
         <h3>Today</h3>
-        <p>{stats.todayUsers}</p>
+        <p>{stats.todayUsers || 0}</p>
       </StatItem>
       <StatItem>
         <h3>Page View</h3>
-        <p>{stats.screenPageViews}</p>
+        <p>{stats.screenPageViews || 0}</p>
       </StatItem>
     </StatsContainer>
   );
