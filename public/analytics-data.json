@@ -1,0 +1,9 @@
+{
+  "timestamp": "2024-12-24T09:11:22.466Z",
+  "message": "Data available",
+  "data": {
+    "totalUsers": "3",
+    "screenPageViews": "25",
+    "todayUsers": "1"
+  }
+}
