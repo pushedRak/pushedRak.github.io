@@ -42,22 +42,32 @@ export default function AnalyticsCounter() {
     todayUsers: '0',
   });
 
+  const CLOUDFRONT_URL = "https://dpq55bd562rz5.cloudfront.net";
+
   useEffect(() => {
     async function fetchStats() {
-      const dataUrl = '/analytics-data.json'
-  
       try {
-        const response = await fetch(dataUrl);
+        const response = await fetch(`${CLOUDFRONT_URL}/analytics/latest.json`, {
+            headers: {
+                'Origin': 'https://pushedrak.github.io'
+            },
+            credentials: 'include'
+        });
+        
         if (!response.ok) {
-          throw new Error('Failed to fetch analytics data');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
         const data = await response.json();
-        if (data.message === 'Data available' && data.data) {
-          setStats(data.data);
-        }
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-      }
+        console.log(data);
+        setStats({
+          totalUsers: '0',
+          screenPageViews: '0',
+          todayUsers: '0',
+        });
+    } catch (error) {
+        console.error('Analytics fetch error:', error);
+    }
     }
   
     fetchStats();
