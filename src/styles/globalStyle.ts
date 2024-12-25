@@ -1,11 +1,14 @@
-@font-face {
-  font-family: 'Pretendard';
-  src: url('/fonts/Pretendard-Thin.woff2') format('woff2');
-  font-weight: 100;
-  font-style: normal;
-}
+import { createGlobalStyle } from 'styled-components';
 
-@font-face {
+export const GlobalStyle = createGlobalStyle`
+ @font-face {
+   font-family: 'Pretendard';
+   src: url('/fonts/Pretendard-Thin.woff2') format('woff2');
+   font-weight: 100;
+   font-style: normal;
+ }
+
+ @font-face {
   font-family: 'Pretendard';
   src: url('/fonts/Pretendard-ExtraLight.woff2') format('woff2');
   font-weight: 200;
@@ -68,22 +71,33 @@
   font-style: normal;
 }
 
-/* 전역 폰트 적용 */
-body {
-  margin: 0;
-  font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
-  font-weight: 400;
-}
+ body, button {
+   margin: 0;
+   padding: 0;
+   font-size: 1rem;
+   font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+   font-weight: 400;
+ }
 
-p {
-  margin-block-start: 0.25rem;
-  margin-block-end: 0.25rem;
-}
+ button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+ }
 
-h1,
-h2,
-h3,
-h4 {
-  margin-block-start: 0.25rem;
-  margin-block-end: 0.25rem;
-}
+ a {
+  color: inherit;
+  text-decoration: none;
+ }
+
+ p {
+   margin-block-start: 0.25rem;
+   margin-block-end: 0.25rem;
+ }
+
+ h1, h2, h3, h4 {
+   margin-block-start: 0.25rem;
+   margin-block-end: 0.25rem;
+ }
+`;
