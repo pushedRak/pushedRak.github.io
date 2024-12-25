@@ -5,10 +5,6 @@ import styled from 'styled-components';
 import { PostData } from '@/types/post';
 import Post from './Post';
 
-const Container = styled.div`
-  margin-top: 32px;
-`;
-
 const Posts = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,14 +18,14 @@ const NoPostMessage = styled.div`
 
 const Categories = styled.div`
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 `;
 
 const CategoryButton = styled.button<{ $active: boolean }>`
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
   border: 1px solid #e0e0e0;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   background: ${props => props.$active ? '#000' : 'none'};
   color: ${props => props.$active ? '#fff' : 'inherit'};
   cursor: pointer;
@@ -83,7 +79,7 @@ export default function PostList({ initialPosts }: PostListProps) {
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
   return (
-    <Container>
+    <div>
       <Categories>
         <CategoryButton
           $active={!selectedCategory}
@@ -119,6 +115,6 @@ export default function PostList({ initialPosts }: PostListProps) {
           </Button>
         ))}
       </Pagination>
-    </Container>
+    </div>
   );
 }

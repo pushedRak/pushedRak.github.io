@@ -2,11 +2,6 @@
 
 import styled from 'styled-components';
 
-const StyledArticle = styled.article`
-  max-width: 1280px;
-  margin: 32px auto;
-`;
-
 const Header = styled.header`
   display: flex;
   flex-direction: column;
@@ -60,12 +55,12 @@ interface StyledPostProps {
 
 export default function StyledPost({ title, date, children }: StyledPostProps) {
   return (
-    <StyledArticle>
+    <article>
       <Header>
         <Title>{title}</Title>
         <Date>{date}</Date>
       </Header>
       <Content>{children}</Content>
-    </StyledArticle>
+    </article>
   );
 }
