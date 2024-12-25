@@ -1,31 +1,7 @@
-'use client';
-
-import Navigation from '@/components/NavigationBar';
-import '@/app/globals.css';
-import { usePathname } from 'next/navigation';
-import StyledComponentsRegistry from '@/lib/registry';
 import Script from 'next/script';
-import styled from 'styled-components';
-import AnalyticsCounter from '@/components/AnalyticsCounter';
+import { getCategoryStructure } from '@/utils/mdx';
+import ClientLayout from '@/app/ClientLayout';
 
-const Container = styled.div`
-  display: flex;
-  margin-top: 32px;
-  min-height: calc(100vh - 96px);
-`;
-
-const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`
-
-const MainSection = styled(Section)`
-  flex: 3;  
-  gap: 16px;
-  width: 1024px;
-  margin: 0 auto;
-`
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID;
 
@@ -34,9 +10,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const pathname = usePathname();
-  const isPortfolio = pathname === '/portfolio';
-
+  const categoryStructure = getCategoryStructure();
   return (
     <html lang="ko">
       <head>
@@ -61,21 +35,9 @@ export default function RootLayout({
         <title>Rak Blog</title>
         <link rel="icon" href="/icons/favicon.ico" />
       </head>
-      <body>
-        <StyledComponentsRegistry>
-          {!isPortfolio && <Navigation />}
-          <Container>
-            <Section>
-            </Section>
-            <MainSection>
-            {children}
-            </MainSection>
-            <Section>
-              <AnalyticsCounter />
-            </Section>
-          </Container>
-        </StyledComponentsRegistry>
-      </body>
+      <ClientLayout categories={categoryStructure}>
+        {children}
+      </ClientLayout>
     </html>
   );
 }
