@@ -13,7 +13,7 @@ export function getMdxFiles() {
     
     return fileNames.map((fileName) => {
       const slug = fileName.replace(/\.mdx$/, '');
-      return getPostBySlug(slug);
+      return getPostBySlug(slug, category);
     });
   });
 
@@ -24,27 +24,26 @@ export function getMdxFiles() {
 }
 
 // 특정 포스트 가져오기
-export function getPostBySlug(slug: string) {
+export function getPostBySlug(slug: string, category: string) {
   const postsDirectory = path.join(process.cwd(), 'src/content/posts');
-  const categories = fs.readdirSync(postsDirectory);
   
-  for (const category of categories) {
-    const fullPath = path.join(postsDirectory, category, `${slug}.mdx`);
-    if (fs.existsSync(fullPath)) {
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
-      const { data, content } = matter(fileContents);
-      
-      return {
-        slug,
-        category,
-        metadata: data,
-        content
-      };
-    }
+  const fullPath = path.join(postsDirectory, decodeURIComponent(category), `${slug}.mdx`);
+  if (fs.existsSync(fullPath)) {
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data, content } = matter(fileContents);
+    
+    return {
+      slug,
+      category: encodeURIComponent(category),
+      subcategory: data.subcategory ? encodeURIComponent(data.subcategory) : undefined,
+      metadata: data,
+      content
+    };
+    
   }
   
-  throw new Error(`Post with slug '${slug}' not found`);
-}
+  throw new Error(`Post with slug '${slug}' category '${category}' not found`);
+ }
 
 // 모든 포스트의 slug 가져오기
 export function getAllPostSlugs() {
@@ -55,22 +54,50 @@ export function getAllPostSlugs() {
     const categoryPath = path.join(postsDirectory, category);
     const fileNames = fs.readdirSync(categoryPath);
     
-    return fileNames.map((fileName) => {
-      return {
-        params: {
-          category: category,
-          slug: fileName.replace(/\.mdx$/, '')
-        }
-      };
-    });
+    return fileNames.map((fileName) => ({
+      params: {
+        category: encodeURIComponent(category),
+        slug: fileName.replace(/\.mdx$/, '')
+      }
+    }));
   });
-}
+ }
 
 // 카테고리별 포스트 가져오기
-export function getPostsByCategory(category?: 'cs' | 'development') {
+export function getPostsByCategory(category?: string, subcategory?: string) {
   const posts = getMdxFiles();
-  
   if (!category) return posts;
+ 
+  return posts.filter((post) => {
+    const categoryMatch = decodeURIComponent(post.category) === decodeURIComponent(category);
+    if (!subcategory) return categoryMatch;
+    return categoryMatch && 
+           decodeURIComponent(post.metadata.subcategory || '') === decodeURIComponent(subcategory);
+  });
+ }
 
-  return posts.filter((post) => post.category.toLowerCase() === category);
-}
+ export function getCategoryStructure() {
+  const posts = getMdxFiles();
+  const structure: Record<string, Set<string>> = {};
+ 
+  posts.forEach((post) => {
+    const category = decodeURIComponent(post.category);
+    const subcategory = post.metadata.subcategory ? 
+      decodeURIComponent(post.metadata.subcategory) : undefined;
+ 
+    if (!structure[category]) {
+      structure[category] = new Set();
+    }
+    
+    if (subcategory) {
+      structure[category].add(subcategory);
+    }
+  });
+ 
+  return Object.fromEntries(
+    Object.entries(structure).map(([category, subcategories]) => [
+      category,
+      Array.from(subcategories)
+    ])
+  );
+ }

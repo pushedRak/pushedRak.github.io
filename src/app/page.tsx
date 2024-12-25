@@ -3,7 +3,7 @@ import HomeContent from '@/components/HomeContent';
 
 export default async function Page() {
   const posts = getMdxFiles().slice(0, 5);
-
+  
   const typedPosts = posts.map(post => ({
     ...post,
     metadata: {
@@ -11,6 +11,7 @@ export default async function Page() {
       createdAt: post.metadata.createdAt || '',
       description: post.metadata.description || '',
       thumbnail: post.metadata.thumbnail || '',
+      subcategory: post.metadata.subcategory || '',
     }
   }));
 

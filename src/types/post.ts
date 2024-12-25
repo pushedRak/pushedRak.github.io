@@ -1,15 +1,17 @@
 export interface PostMetadata {
   title: string;
-  createdAt: string; // 생성 일자 추가
-  updatedAt?: string; // 수정 일자 추가
+  createdAt: string;
+  updatedAt?: string;
   description: string;
   thumbnail?: string;
   tags?: string[];
+  subcategory?: string;
 }
 
 export interface PostData {
   slug: string;
   category: string;
+  subcategory?: string;
   metadata: PostMetadata;
   content: string;
 }

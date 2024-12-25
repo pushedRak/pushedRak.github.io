@@ -1,36 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { PostData } from '@/types/post';
 import Post from './Post';
+import { useSearchParams } from 'next/navigation';
 
 const Posts = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+`;
+
+const Title = styled.h2`
+  margin-bottom: 1.7rem;
 `;
 
 const NoPostMessage = styled.div`
   display: flex;
   margin: 3rem auto;
 `
-
-const Categories = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-`;
-
-const CategoryButton = styled.button<{ $active: boolean }>`
-  padding: 0.5rem 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 1.25rem;
-  background: ${props => props.$active ? '#000' : 'none'};
-  color: ${props => props.$active ? '#fff' : 'inherit'};
-  cursor: pointer;
-  transition: all 0.2s ease;
-`;
 
 const Pagination = styled.div`
   display: flex;
@@ -60,44 +48,32 @@ interface PostListProps {
 const POSTS_PER_PAGE = 5;
 
 export default function PostList({ initialPosts }: PostListProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>();
   const [currentPage, setCurrentpage] = useState(1);
-  const categories = [{
-    category: 'cs',
-    name: 'CS',
-  }, {
-    category: 'development',
-    name: '개발',
-  }, {
-    category: 'algoritym',
-    name: '알고리즘',
-  }];
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const category = searchParams.get('category');
+    const sub = searchParams.get('sub');
+
+    console.log('category:', category);
+    console.log('sub:', sub);
+
+    if (category) {
+      setSelectedCategory(category);
+    }
+  }, [searchParams]);
+  
   const filteredPosts = selectedCategory
-    ? initialPosts.filter(post => post.category === selectedCategory)
+    ? initialPosts.filter(post => decodeURIComponent(post.category) === selectedCategory)
     : initialPosts;
   const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
   return (
     <div>
-      <Categories>
-        <CategoryButton
-          $active={!selectedCategory}
-          onClick={() => setSelectedCategory(undefined)}
-        >
-          전체
-        </CategoryButton>
-        {categories.map((category, index) => (
-          <CategoryButton 
-            key={index}
-            $active={selectedCategory === category.category}
-            onClick={() => setSelectedCategory(category.category)}
-          >
-            {category.name}
-          </CategoryButton>
-          ))}
-      </Categories>
-
+      <Title>포스트 목록</Title>
       <Posts>
         {paginatedPosts.length !== 0 ? paginatedPosts.map((post, index) => (
           <Post key={index} post={post} />

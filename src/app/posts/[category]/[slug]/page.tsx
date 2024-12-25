@@ -19,7 +19,7 @@ const components = {
 
 
 export default function Post({ params }: { params: { category: string; slug: string } }) {
-  const post = getPostBySlug(params.slug);
+  const post = getPostBySlug(params.slug, params.category);
 
   return (
     <StyledPost

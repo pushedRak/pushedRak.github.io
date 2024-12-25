@@ -64,17 +64,6 @@ const ContentFooter = styled.div`
   color: #666;
 `;
 
-const categories = [{
-  category: 'cs',
-  name: 'CS',
-}, {
-  category: 'development',
-  name: '개발',
-}, {
-  category: 'algoritym',
-  name: '알고리즘',
-}];
-
 interface PostProps {
   post: PostData;
 }
@@ -105,7 +94,13 @@ export default function Post({post}: PostProps) {
           <ContentFooter>
             <time>{formatDate(post.metadata.createdAt)}</time>
             <p>·</p>
-            <p>{categories.find(category => category.category === post.category)?.name}</p>
+            <p>{decodeURIComponent(post.category)}</p>
+            {post.subcategory && (
+              <>
+                <p>·</p>
+                <p>{decodeURIComponent(post.subcategory)}</p>
+              </>
+            )}
           </ContentFooter>
         </Content>
       </Article>
