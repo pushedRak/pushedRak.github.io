@@ -53,7 +53,7 @@ export default function AnalyticsCounter() {
         if (cachedStats) {
           const parsedCachedStats = JSON.parse(cachedStats);
           const timestamp = parsedCachedStats.timestamp;
-          const data: Stats = parsedCachedStats.data.data;
+          const data: Stats = parsedCachedStats.data;
           const now = new Date().getTime();
           
           // 캐시가 유효한 경우
@@ -78,9 +78,9 @@ export default function AnalyticsCounter() {
         const data = await response.json();
         
         // 새로운 데이터를 상태와 캐시에 저장
-        setStats(data);
+        setStats(data.data);
         localStorage.setItem('analyticsStats', JSON.stringify({
-          data,
+          data: data.data,
           timestamp: new Date().getTime()
         }));
       } catch (error) {
