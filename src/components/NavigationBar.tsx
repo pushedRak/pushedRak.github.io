@@ -70,6 +70,7 @@ const Menu = styled.div`
 
 export default function Navigation() {
   const pathname = usePathname();
+  const isPortfolio = pathname === '/portfolio'
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -83,6 +84,10 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
+
+  if(isPortfolio) {
+    return null;
+  }
 
   return (
     <>
