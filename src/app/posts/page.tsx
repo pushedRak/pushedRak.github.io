@@ -8,7 +8,7 @@ export default async function Posts() {
 
   return (
     <Suspense>
-      <PostList initialPosts={posts} />;
+      <PostList initialPosts={posts} />
     </Suspense>
   );
 }
