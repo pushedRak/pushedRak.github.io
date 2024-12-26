@@ -1,20 +1,18 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Loader2 } from 'lucide-react';
 import { PostData } from '@/types/post';
 import { formatDate } from '@/utils/dateFormat';
 import { getCategoryName } from '@/utils/categoryFormat';
+import Image from './Image';
 
 const Container = styled(Link)`
-  padding: 1.5rem 0;
-  border-top: 1px solid #e0e0e0;
+  padding: 2rem 0;
+  border-top: 1px solid #e5e7e9;
   text-decoration: none;
   color: inherit;
 
   &:last-child {
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e5e7e9;
   }
 `;
 
@@ -30,21 +28,6 @@ const ThumbnailContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const LoadingSpinner = styled(Loader2)`
-  position: absolute;
-  color: #666;
-  animation: spin 1s linear infinite;
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 const Content = styled.div`
@@ -70,38 +53,24 @@ interface PostProps {
 }
 
 export default function Post({post}: PostProps) {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
     <Container href={`/posts/${post.category}/${post.slug}`}>
       <Article>
         <ThumbnailContainer>
-          {isLoading && <LoadingSpinner size={24} />}
-          <Image 
-            src={post.metadata.thumbnail || ''} 
+          {post.metadata.thumbnail &&
+            <Image 
+            thumbnail={post.metadata.thumbnail}
             alt={post.metadata.title}
-            fill
-            style={{
-              objectFit: 'contain',
-              opacity: isLoading ? 0 : 1,
-              transition: 'opacity 0.3s ease'
-            }}
-            onLoadingComplete={() => setIsLoading(false)}
-          />
+            />
+          } 
         </ThumbnailContainer>
         <Content>
-          <h2>{post.metadata.title}</h2>
+          <h2>{post.subcategory && `[${post.subcategory}] `}{post.metadata.title}</h2>
           <Description>{post.metadata.description}</Description>
           <ContentFooter>
             <time>{formatDate(post.metadata.createdAt)}</time>
             <p>·</p>
             <p>{getCategoryName(post.category)}</p>
-            {post.subcategory && (
-              <>
-                <p>·</p>
-                <p>{post.subcategory}</p>
-              </>
-            )}
           </ContentFooter>
         </Content>
       </Article>

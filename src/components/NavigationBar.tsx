@@ -14,7 +14,7 @@ const Nav = styled.nav<{ $visible: boolean }>`
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 4rem;
   background-color: #ffffff;
   border-bottom: 1px solid #e1e4e8;
   transition: transform 0.3s ease;
@@ -26,7 +26,7 @@ const Container = styled.div`
   max-width: 1012px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,27 +35,27 @@ const Container = styled.div`
 const Logo = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 16px;
-  font-size: 20px;
+  gap: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #24292e;
   text-decoration: none;
 
   img {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
   }
 `;
 
 const Menu = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 1.5rem;
 
   a {
     color: #24292e;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 1rem;
     transition: font-weight 0.3s ease, text-shadow 0.3s ease;
 
     &:hover {

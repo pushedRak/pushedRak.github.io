@@ -9,8 +9,8 @@ import { Suspense } from 'react';
 
   const Container = styled.div`
     display: flex;
-    margin-top: 2rem;
-    min-height: calc(100vh - 96px);
+    margin-top: 4rem;
+    min-height: calc(100vh - 8rem);
   `;
 
   const Section = styled.section`

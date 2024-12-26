@@ -25,7 +25,9 @@ export default function Post({ params }: { params: { category: string; slug: str
   return (
     <StyledPost
       title={post.metadata.title}
-      date={formatDate(post.metadata.createdAt)}
+      createdDate={formatDate(post.metadata.createdAt)}
+      updatedDate={formatDate(post.metadata.updatedAt)}
+      thumbnail={post.metadata.thumbnail}
     >
       <MDXRemote source={post.content} components={components}/>
     </StyledPost>
