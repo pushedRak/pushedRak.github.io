@@ -72,7 +72,7 @@ export default function Post({post}: PostProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <Container href={`/posts/${post.category.toLowerCase()}/${post.slug}`}>
+    <Container href={`/posts/${decodeURIComponent(post.category)}/${post.slug}`}>
       <Article>
         <ThumbnailContainer>
           {isLoading && <LoadingSpinner size={24} />}
