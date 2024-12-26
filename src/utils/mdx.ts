@@ -27,7 +27,7 @@ export function getMdxFiles() {
 export function getPostBySlug(slug: string, category: string) {
   const postsDirectory = path.join(process.cwd(), 'src/content/posts');
   
-  const fullPath = path.join(postsDirectory, decodeURIComponent(category), `${slug}.mdx`);
+  const fullPath = path.join(postsDirectory, category, `${slug}.mdx`);
   if (fs.existsSync(fullPath)) {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
@@ -56,7 +56,7 @@ export function getAllPostSlugs() {
     
     return fileNames.map((fileName) => ({
       params: {
-        category: encodeURIComponent(category),
+        category: category,
         slug: fileName.replace(/\.mdx$/, '')
       }
     }));

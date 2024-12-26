@@ -1,3 +1,4 @@
+import { getCategoryName } from '@/utils/categoryFormat';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -76,7 +77,7 @@ export default function CategoryNavigation ({categories}: CategoryNavigationProp
             $isSelected={selectedCategory === category && !selectedSubcategory} 
             href={`/posts?category=${category}`}
           >
-            {category}
+            {getCategoryName(category)}
           </CategoryLink>
 
           <SubCategories>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
 import { PostData } from '@/types/post';
 import { formatDate } from '@/utils/dateFormat';
+import { getCategoryName } from '@/utils/categoryFormat';
 
 const Container = styled(Link)`
   padding: 1.5rem 0;
@@ -72,7 +73,7 @@ export default function Post({post}: PostProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <Container href={`/posts/${encodeURIComponent(post.category)}/${post.slug}`}>
+    <Container href={`/posts/${post.category}/${post.slug}`}>
       <Article>
         <ThumbnailContainer>
           {isLoading && <LoadingSpinner size={24} />}
@@ -94,11 +95,11 @@ export default function Post({post}: PostProps) {
           <ContentFooter>
             <time>{formatDate(post.metadata.createdAt)}</time>
             <p>·</p>
-            <p>{decodeURIComponent(post.category)}</p>
+            <p>{getCategoryName(post.category)}</p>
             {post.subcategory && (
               <>
                 <p>·</p>
-                <p>{decodeURIComponent(post.subcategory)}</p>
+                <p>{post.subcategory}</p>
               </>
             )}
           </ContentFooter>

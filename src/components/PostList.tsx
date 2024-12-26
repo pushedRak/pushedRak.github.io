@@ -66,7 +66,7 @@ export default function PostList({ initialPosts }: PostListProps) {
   }, [searchParams]);
   
   const filteredPosts = selectedCategory
-    ? initialPosts.filter(post => decodeURIComponent(post.category) === selectedCategory)
+    ? initialPosts.filter(post => post.category === selectedCategory)
     : initialPosts;
   const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE);
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
