@@ -66,6 +66,10 @@ export default function CategoryNavigation ({categories}: CategoryNavigationProp
     return null;
   }
 
+  if (pathname === '/portfolio') {
+    return null;
+  }
+
   return (
     <Container>
       <CategoryTitle>
