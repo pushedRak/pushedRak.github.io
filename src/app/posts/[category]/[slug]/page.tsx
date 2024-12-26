@@ -7,9 +7,6 @@ import CodeBlock from '@/components/CodeBlock';
 export async function generateStaticParams() {
   const posts = getAllPostSlugs();
 
-  console.log(posts[0].params)
-  console.log(posts[1].params)
-
   return posts.map((post) => ({
     category: post.params.category,
     slug: post.params.slug,
