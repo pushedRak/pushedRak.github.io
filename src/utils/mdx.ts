@@ -27,15 +27,15 @@ export function getMdxFiles() {
 export function getPostBySlug(slug: string, category: string) {
   const postsDirectory = path.join(process.cwd(), 'src/content/posts');
   
-  const fullPath = path.join(postsDirectory, decodeURIComponent(category), `${slug}.mdx`);
+  const fullPath = path.join(postsDirectory, category, `${slug}.mdx`);
   if (fs.existsSync(fullPath)) {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
     
     return {
       slug,
-      category: encodeURIComponent(category),
-      subcategory: data.subcategory ? encodeURIComponent(data.subcategory) : undefined,
+      category: category,
+      subcategory: data.subcategory ? data.subcategory : undefined,
       metadata: data,
       content
     };
@@ -61,7 +61,7 @@ export function getAllPostSlugs() {
       }
     }));
   });
- }
+}
 
 // 카테고리별 포스트 가져오기
 export function getPostsByCategory(category?: string, subcategory?: string) {
@@ -69,10 +69,10 @@ export function getPostsByCategory(category?: string, subcategory?: string) {
   if (!category) return posts;
  
   return posts.filter((post) => {
-    const categoryMatch = decodeURIComponent(post.category) === decodeURIComponent(category);
+    const categoryMatch = post.category === category;
     if (!subcategory) return categoryMatch;
     return categoryMatch && 
-           decodeURIComponent(post.metadata.subcategory || '') === decodeURIComponent(subcategory);
+           post.metadata.subcategory || '' === subcategory;
   });
  }
 
@@ -81,9 +81,9 @@ export function getPostsByCategory(category?: string, subcategory?: string) {
   const structure: Record<string, Set<string>> = {};
  
   posts.forEach((post) => {
-    const category = decodeURIComponent(post.category);
+    const category = post.category;
     const subcategory = post.metadata.subcategory ? 
-      decodeURIComponent(post.metadata.subcategory) : undefined;
+      post.metadata.subcategory : undefined;
  
     if (!structure[category]) {
       structure[category] = new Set();

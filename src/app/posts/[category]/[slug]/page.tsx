@@ -6,8 +6,12 @@ import CodeBlock from '@/components/CodeBlock';
 
 export async function generateStaticParams() {
   const posts = getAllPostSlugs();
+
+  console.log(posts[0].params)
+  console.log(posts[1].params)
+
   return posts.map((post) => ({
-    category: post.params.category.toLowerCase(),
+    category: post.params.category,
     slug: post.params.slug,
   }));
 }
@@ -19,7 +23,7 @@ const components = {
 
 
 export default function Post({ params }: { params: { category: string; slug: string } }) {
-  const post = getPostBySlug(params.slug, params.category);
+  const post = getPostBySlug(params.slug, decodeURIComponent(params.category));
 
   return (
     <StyledPost

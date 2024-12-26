@@ -81,16 +81,15 @@ export default function CategoryNavigation ({categories}: CategoryNavigationProp
 
           <SubCategories>
             {subs.map((sub, index) => (
-              <>
+              <div key={sub}>
                 {index === subs.length - 1 ? '└ ' : '├ '}
                 <CategoryLink
-                  key={sub}
                   $isSelected={selectedCategory === category && selectedSubcategory === sub} 
                   href={`/posts?category=${category}&sub=${sub}`}
                 >
-                  {decodeURIComponent(sub)}
+                  {sub}
                 </CategoryLink>
-              </>
+              </div>
             ))}
           </SubCategories>
         </NavItem>
