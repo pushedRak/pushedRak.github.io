@@ -5,6 +5,7 @@
   import AnalyticsCounter from '../components/AnalyticsCounter';
   import { GlobalStyle } from '@/styles/globalStyle';
 import CategoryNavigation from '@/components/CategoryNavigation';
+import { Suspense } from 'react';
 
   const Container = styled.div`
     display: flex;
@@ -40,7 +41,9 @@ import CategoryNavigation from '@/components/CategoryNavigation';
             <Navigation />
             <Container>
               <Section>
-                <CategoryNavigation categories={categories}/>
+                <Suspense>
+                  <CategoryNavigation categories={categories}/>
+                </Suspense>
               </Section>
               <MainSection>
                 {children}
